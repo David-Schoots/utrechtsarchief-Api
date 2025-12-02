@@ -26,7 +26,7 @@ Route::middleware(['auth:sanctum', 'superadmin'])->group(function () {
     Route::post('/panorama', [PanoramaController::class, 'store']);
     Route::put('/panorama/{id}', [PanoramaController::class, 'update']);
     Route::delete('/panorama/{id}', [PanoramaController::class, 'destroy']);
-    Route::post('/user', [PanoramaController::class, 'store']);
-    Route::put('/user/{id}', [PanoramaController::class, 'update']);
-    Route::delete('/user/{id}', [PanoramaController::class, 'destroy']);
+    Route::post('/user', [UserController::class, 'store']);
+    Route::put('/user/{id}', [UserController::class, 'update']);
+    Route::delete('/user/{id}', [UserController::class, 'destroy']);
 }); 
