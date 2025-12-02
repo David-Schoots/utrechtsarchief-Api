@@ -54,4 +54,32 @@ class UserController extends Controller
     'message' => 'user deleted successfully'
     ], 204);
     }
+
+    public function update($id)
+{
+    $user = User::findOrFail($id);
+
+    if(! $user){
+        return response()->json([
+            'status' => false,
+            'message' => 'Panorama not found with that id',
+        ], 404);
+    }
+    $user->update($request->all());
+
+    return response()->json([
+        'status' => true,
+        'message' => 'panorama updated successfully'
+    ], 200);
+}
+
+public function store(Request $request)
+{
+    $user = User::create($request->all());
+
+    return response()->json([
+        'status' => true,
+        'message' => 'panorama created successfully'
+    ], 201);
+}
 }

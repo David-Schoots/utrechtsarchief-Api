@@ -89,4 +89,32 @@ return response()->json([
 'message' => 'panorama deleted successfully'
 ], 204);
 }
+
+public function update($id)
+{
+    $panoramas = Panorama::findOrFail($id);
+
+    if(! $panoramas){
+        return response()->json([
+            'status' => false,
+            'message' => 'Panorama not found with that id',
+        ], 404);
+    }
+    $panoramas->update($request->all());
+
+    return response()->json([
+        'status' => true,
+        'message' => 'panorama updated successfully'
+    ], 200);
+}
+
+public function store(Request $request)
+{
+    $panoramas = Panorama::create($request->all());
+
+    return response()->json([
+        'status' => true,
+        'message' => 'panorama created successfully'
+    ], 201);
+}
 }
