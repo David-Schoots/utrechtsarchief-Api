@@ -74,7 +74,7 @@ class PanoramaController extends Controller
 
 public function destroy($id)
 {
-$panoramas = Customer::findOrFail($id);
+$panoramas = Panorama::findOrFail($id);
 
 if(! $panoramas){
 return response()->json([
