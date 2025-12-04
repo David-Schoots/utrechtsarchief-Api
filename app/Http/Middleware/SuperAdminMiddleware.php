@@ -8,17 +8,30 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SuperAdminMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle($request, Closure $next)
-{
-    if (!auth()->check() || !auth()->user()->isSuperAdmin()) {
-        return response()->json(['message' => 'Unauthorized. Super Admin access required.'], 403);
+   public function handle($request, Closure $next)
+    {
+        if (!$request->header('Authorization')) {
+            return $this->returnUnauthorized();
+        }
+
+        if (!$token = $request->bearerToken()) {
+            return $this->returnUnauthorized();
+        }
+
+        if ($token !== config('api.key')) {
+            return $this->returnUnauthorized();
+        }
+
+        return $next($request);
     }
 
-    return $next($request);
-}
+    private function returnUnauthorized()
+    {
+        return response()->json([
+            "errors" => [[
+                "status" => 403,
+                "title" => "Permission denied",
+            ]]
+        ], 403);
+    }
 }

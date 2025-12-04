@@ -21,7 +21,6 @@ class UserSeeder extends Seeder
             'email' => 'superadmin@example.com',
             'password' => Hash::make('password'),
             'role' => 'superadmin',
-            'api_token' => Str::random(60),
         ]);
 
         // Create Admin
@@ -30,11 +29,6 @@ class UserSeeder extends Seeder
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
             'role' => 'admin',
-            'api_token' => Str::random(60),
         ]);
-
-        // Output the API tokens for testing
-        $this->command->info('Super Admin API Token: ' . $superAdmin->api_token);
-        $this->command->info('Admin API Token: ' . $admin->api_token);
     }
 }
