@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SuperAdminMiddleware
 {
-   public function handle($request, Closure $next)
+   public function handle(Request $request, Closure $next)
     {
         if (!$request->header('Authorization')) {
             return $this->returnUnauthorized();

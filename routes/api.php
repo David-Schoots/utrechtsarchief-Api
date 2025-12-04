@@ -22,7 +22,7 @@ Route::get('/panorama/{id}', [PanoramaController::class, 'show']);
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/user/{id}', [UserController::class, 'show']);
 
-Route::middleware(['superadmin'])->group(function () {
+Route::middleware([SuperAdminMiddleware::class])->group(function () {
     Route::post('/panorama', [PanoramaController::class, 'store']);
     Route::put('/panorama/{id}', [PanoramaController::class, 'update']);
     Route::delete('/panorama/{id}', [PanoramaController::class, 'destroy']);
