@@ -90,7 +90,7 @@ return response()->json([
 ], 204);
 }
 
-public function update($id)
+public function update(Request $request, $id)
 {
     $panoramas = Panorama::findOrFail($id);
 
