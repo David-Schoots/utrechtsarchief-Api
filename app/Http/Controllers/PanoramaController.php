@@ -12,7 +12,11 @@ class PanoramaController extends Controller
      */
     public function index()
     {
-        $panoramas = Panorama::with('additionalinformations')->get();
+        $panoramas = Panorama::with('additionalinformations')->get()->map(function($panorama) {
+            $panoramaArray = $panorama->toArray();
+            $panoramaArray['image_url'] = $panorama->image_url;
+            return $panoramaArray;
+        });
 
         return response()->json([
             'status' => true,
@@ -26,19 +30,21 @@ class PanoramaController extends Controller
      */
     public function show($id)
     {
-        $panoramas = Panorama::with('additionalinformations')->find($id);
+        $panorama = Panorama::with('additionalinformations')->find($id);
 
-        if (! $panoramas) {
+        if (! $panorama) {
             return response()->json([
                 'status' => false,
                 'message' => 'Panorama not found',
-                
             ], 404);
         }
 
+        $panoramaData = $panorama->toArray();
+        $panoramaData['image_url'] = $panorama->image_url;
+
         return response()->json([
             'status' => true,
-            'data' => $panoramas,
+            'data' => $panoramaData,
         ], 200);
     }
 
@@ -56,19 +62,12 @@ class PanoramaController extends Controller
             ], 404);
         }
 
-        //loop door panorama data en opbouwen nieuwe array
-        // $ownArray =[];
-        // foreach($panorama as $value){
-        //      $ownArray[] = [
-        //     'page_id' => '',
-        //     'image_url' => '',
-        // ];
-        // }
-       
+        $panoramaData = $panorama->toArray();
+        $panoramaData['image_url'] = $panorama->image_url;
 
         return response()->json([
-        'status' => true,
-        'data' => $panorama,
+            'status' => true,
+            'data' => $panoramaData,
         ], 200);
     }
 
